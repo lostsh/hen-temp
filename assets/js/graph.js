@@ -3,7 +3,7 @@ function main(dataFilePath){
     var p = document.createElement("p");
     p.textContent = "coucou je suis le futur graphique !<br> ["+dataFilePath+"]<br>"+readFile(dataFilePath);
 
-    document.querySelector("#articleContainer").appendChild(p);
+    document.querySelector("#graph").appendChild(p);
 }
 
 
