@@ -40,3 +40,4 @@ jobs:
       - name: Auto-commit
         run: |
           echo "coucou"
+          echo "Bonjour"
