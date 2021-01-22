@@ -39,9 +39,4 @@ jobs:
       
       - name: Auto-commit
         run: |
-	  echo Start auto-commit
-	  git config user.name "lostsh-autocommit"
-	  git config user.email "0pdlna3@gmail.com"
-	  git add .
-	  git commit -m "Auto commiting data update"
-	  git push
+          echo "coucou"
