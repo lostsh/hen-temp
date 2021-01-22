@@ -28,20 +28,3 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
-
-      # Updating datacsv file
-      - name: Updata data.csv file
-        run: |
-          echo Start Updating data.csv file
-          echo -e "[*] Adding current data & time : \n\t$(date)"
-	  echo $(date +%d/%m/%y,%H:%M,11.5) >> data.csv
-          #tail -n$(( $(wc -l data.csv | cut -d' ' -f1)-1 )) data.csv >> index.html
-          echo -e "[+] Update complete\n"
-
-      - name: Auto-commit
-	run: |
-	  echo Start auto-commit
-	  git config user.name "lostsh-autocommit"
-	  git config user.email "0pdlna3@gmail.com"
-	  git commit -m "Auto commiting data update"
-	  git push
