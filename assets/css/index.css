@@ -1,0 +1,18 @@
+*{
+    margin: 0;
+    height: 0;
+}
+
+/*
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+*/
+
+#graphContainer{
+    margin-top: calc(50% - 250px);
+    width: 100vw;
+}
