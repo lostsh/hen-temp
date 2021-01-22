@@ -6,8 +6,9 @@ function main(dataFilePath){
     var p1 = document.createElement("p");
     p1.textContent = "coucou je suis le futur graphique !<br>"
 
-    document.querySelector("#graph").appendChild(p1);
-    document.querySelector("#graph").appendChild(p);
+    const graph = document.querySelector("#graph");
+    graph.appendChild(p);
+    graph.appendChild(p1);
 }
 
 
