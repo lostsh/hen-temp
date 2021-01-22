@@ -1,13 +1,13 @@
 
 function main(dataFilePath){
-    var p = document.createElement("p");
-    p.textContent = "["+dataFilePath+"]<br>"+readFile(dataFilePath);
+    //var p = document.createElement("p");
+    //p.textContent = "["+dataFilePath+"]<br>"+readFile(dataFilePath);
 
     var p1 = document.createElement("p");
-    p1.textContent = "coucou je suis le futur graphique !<br>"
+    p1.textContent = "coucou je suis le futur graphique !<br>";
 
     const graph = document.querySelector("#graph");
-    graph.appendChild(p);
+    //graph.appendChild(p);
     graph.appendChild(p1);
 }
 
