@@ -1,8 +1,12 @@
 
 function main(dataFilePath){
     var p = document.createElement("p");
-    p.textContent = "coucou je suis le futur graphique !<br> ["+dataFilePath+"]<br>"+readFile(dataFilePath);
+    p.textContent = "["+dataFilePath+"]<br>"+readFile(dataFilePath);
 
+    var p1 = document.createElement("p");
+    p1.textContent = "coucou je suis le futur graphique !<br>"
+
+    document.querySelector("#graph").appendChild(p1);
     document.querySelector("#graph").appendChild(p);
 }
 
