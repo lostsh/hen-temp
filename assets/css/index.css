@@ -13,6 +13,7 @@ body{
 */
 
 #graphContainer{
-    margin-top: calc(50% - 250px);
+    /*margin-top: calc(50% - 250px);*/
+    margin-top: 4vh;
     width: 100vw;
 }
