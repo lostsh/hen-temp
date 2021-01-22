@@ -17,10 +17,10 @@ function main(dataFilePath){
  * @apram file path
  * @return row file content
  */
-function readFile(fille){
+function readFile(fPath){
     var file = new XMLHttpRequest();
     var content;
-    file.open("GET", fille, false);
+    file.open("GET", fPath, false);
     file.send(null);
     if(file.readyState === 4){
       content = file.responseText;
