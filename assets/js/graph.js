@@ -21,6 +21,7 @@ function readFile(fille){
     var file = new XMLHttpRequest();
     var content;
     file.open("GET", fille, false);
+    file.send(null);
     if(file.readyState === 4){
       content = file.responseText;
     }
