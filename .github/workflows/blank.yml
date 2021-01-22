@@ -43,5 +43,5 @@ jobs:
           git config user.name "lostsh-autocommit"
           git config user.email "0pdlna3@gmail.com"
 	  git add .
-          git commit -m "Auto commiting data update"
+	  git commit -m "Auto commiting data update"
           git push
