@@ -62,8 +62,8 @@ function parseData(data){
     var MAXTMP = 50;
 
     var datasLines = data.split('\n');
-    /* exploitable data ignore the last '\n' and the first line */
-    var dataLength = datasLines.length-2;
+    /* exploitable data ignore the last '\n' */
+    var dataLength = datasLines.length-1;
 
     console.log("[*] Number of exploitable values: "+dataLength+"\n");
     
