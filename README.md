@@ -61,3 +61,20 @@ curl \
 https://api.github.com/repos/lostsh/node-time/actions/workflows/manual.yml/dispatches \
 -d '{"ref":"master", "inputs":{"name":"OMG IT WORKS"}}'
 ```
+
+### Pour envoyer une requette
+Pour envoyer une requette a la github Action qui se trouve chez github api, on peut utiliser le programme `main.c` qui se trouve dans le dossier `sendRequest`. Le fichier qui est signore `secret.h` contiend une seule ligne a savoir :
+
+```c
+#define TOKEN 40XXXXXXXXXX1c20dfbaaaXXXXXXXXXXhdd7XXXX
+```
+
+Pour le compiler, faite : 
+```bash
+gcc main.c -o request
+```
+Pour envoyer une requette : 
+```bash
+# 22.5 is the temperature to send
+./request 22.5
+```
