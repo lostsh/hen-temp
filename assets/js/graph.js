@@ -22,17 +22,29 @@ function readFile(fPath) {
 }
 
 function graphMaker(datas, graphId="graph"){
-    var pathStr = pathForGraph(parseData(datas));
+    var parsedPoints = parseData(datas);
+    var pathStr = pathForGraph(parsedPoints);
+
+    /*
+    // a faire plus tard : ajouter les points sur chaque point
+    parsedPoints.forEach(function(pos){
+        pos = pos.split(' ');
+        var computedPos = calcPointPostion(pos[0], 100-pos[1]);
+        //console.log(computedPos);
+        var x = computedPos[0];
+        var y = computedPos[1];
+        console.log("x : ");
+        console.log(x);
+        console.log("y : ");
+        console.log(y);
+        createPoint(document.querySelector('body'), x, y);
+    });*/
 
     var graph = document.querySelector("#"+graphId);
     graph.style.backgroundColor = "grey";
     graph.style.width = "100vw";
     graph.style.height = "500px";
     graph.style.clipPath = "polygon("+pathStr+")";
-    
-    //var p = document.createElement("p");
-    //p.textContent = datas;
-    //graph.appendChild(p);
 }
 
 /**
@@ -44,7 +56,11 @@ function pathForGraph(data){
     var pathStr = "0 100%, ";
     
     data.forEach(function(coord){
-        pathStr+=coord;
+        coord = coord.split(' ');
+        /* Because of the graph is reversed, the 0 is on the to
+         * to reverse it, substract it from the max, so from 100
+         */
+        pathStr+=(coord[0]+'% '+(100-coord[1])+'%, ');
     });
 
     pathStr+=" 100% 100%, 0 100%";
@@ -77,23 +93,11 @@ function parseData(data){
             /* Map to have value between 0 and 100 */
             var y = map(line[2], MINTMP, MAXTMP, 0, 100);
 
-            /* Because of the graph is reversed, the 0 is on the to
-             * to reverse it, substract it from the max, so from 100
-             */
-            var yBar = 100-y;
-
-            /* coords array form ["10% 34%, ", "10% 12%, "] */
-            coords.push(x+'% '+yBar+'%, ');
+            /* coords array form ["10 34", "10 12"] */
+            coords.push(x+' '+y);
         }
-
-        console.log("--> "+line+"\n");
-        console.log(line);
+        //console.log(line);
     }
-
-    /*
-    datasLines.forEach(function(line){
-        console.log(line.split(','));
-    });*/
 
     return coords;
 }
@@ -138,4 +142,17 @@ function createPoint(parent, x, y, value="point"){
     ptContainer.appendChild(point);
 
     parent.appendChild(ptContainer);
+}
+
+/**
+ * Return coord of point based on the position of the graph on the page
+ * 
+ * @param {*} x initial x
+ * @param {*} y initial y
+ */
+function calcPointPostion(x, y){
+    const parentNode = document.querySelector("#graph");
+    var nodeX = parentNode.getBoundingClientRect().x;
+    var nodeY = parentNode.getBoundingClientRect().y;
+    return [nodeX+x, nodeY+y];
 }
