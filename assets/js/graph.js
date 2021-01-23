@@ -102,3 +102,40 @@ function map(value, minSrc, maxSrc, minDest, maxDest){
     if( value < minSrc || value > maxSrc) return 0;
     return (value*maxDest)/maxSrc;
 }
+
+/**
+ * Create a div with absolute position
+ * @param {*} parent parent node
+ * @param {*} x abciss
+ * @param {*} y ordonnate
+ * @param {*} value Text title isplay on hover
+ */
+function createPoint(parent, x, y, value="point"){
+
+    var ptContainer = document.createElement("div");
+    ptContainer.style.position = "absolute";
+    ptContainer.style.width = "auto";
+    ptContainer.style.height = "auto";
+    ptContainer.style.padding = "2px";
+    ptContainer.style.borderRadius = "100%";
+    ptContainer.style.top = ((x-1)+"px");
+    ptContainer.style.left = (y-1)+"px";
+    ptContainer.backgroundColor = "red";
+    ptContainer.style.border = "1px solid black";
+    ptContainer.className = "pointContainer";
+    ptContainer.title = value;
+
+    var point = document.createElement("div");
+    //point.style.position = "absolute";
+    point.style.width = "2px"
+    point.style.height = "2px";
+    point.style.borderRadius = "100%";
+    //point.style.backgroundColor = "black";
+    point.style.border = "1px solid black";
+    //point.style.top = ((x-2.5)+"px");
+    //point.style.left = (y-2.5)+"px";
+
+    ptContainer.appendChild(point);
+
+    parent.appendChild(ptContainer);
+}
