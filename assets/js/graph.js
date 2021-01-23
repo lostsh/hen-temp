@@ -30,9 +30,9 @@ function graphMaker(datas, graphId="graph"){
     graph.style.height = "500px";
     graph.style.clipPath = "polygon("+pathStr+")";
     
-    var p = document.createElement("p");
-    p.textContent = datas;
-    graph.appendChild(p);
+    //var p = document.createElement("p");
+    //p.textContent = datas;
+    //graph.appendChild(p);
 }
 
 /**

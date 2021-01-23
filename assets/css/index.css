@@ -3,17 +3,19 @@
     height: 0;
 }
 
-/*
-body{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-*/
-
 #graphContainer{
     /*margin-top: calc(50% - 250px);*/
+
+    background-image: url('../img/graph.svg');
+    background-size: 100vw 500px;
+    background-position: bottom left;
+    background-repeat: no-repeat;
+
     margin-top: 4vh;
     width: 100vw;
+    height: auto;
+}
+
+#graph{
+    opacity: 0.9;
 }
