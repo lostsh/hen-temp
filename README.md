@@ -69,7 +69,7 @@ Pour envoyer une requette a la github Action qui se trouve chez github api, on p
 #define TOKEN 40XXXXXXXXXX1c20dfbaaaXXXXXXXXXXhdd7XXXX
 ```
 
-Pour le compiler, faite : 
+Pour le compiler : 
 ```bash
 gcc main.c -o request
 ```
