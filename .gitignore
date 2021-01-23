@@ -1,3 +1,6 @@
 **/secret.h
 **/a.out
 **/request
+
+nodemcu/
+!nodemcu/*.ino
