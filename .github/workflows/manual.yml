@@ -1,31 +1,48 @@
-name: Manual workflow
+name: Handle data from HTTP
 
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
 on:
   workflow_dispatch:
-    # Inputs the workflow accepts.
     inputs:
-      name:
+      temp:
         # Friendly description to be shown in the UI instead of 'name'
-        description: 'Person to greet'
-        # Default value if no value is explicitly provided
-        default: 'World'
-        # Input has to be provided for the workflow to run
+        description: 'Input Temperature value'
+        default: '0'
         required: true
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
-  greet:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-    # Runs a single command using the runners shell
-    - name: Send greeting
-      run: echo "Hello ${{ github.event.inputs.name }}"
+  write-data:
     
-    - name: Print Hello 
-      run: echo Hello world
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2 #for the auto-commit task
+    
+    - name: Display inputed temperature
+      run: echo "Temperature = ${{ github.event.inputs.temp }}"
+    
+    - name: Update data.csv 
+      run: |
+        echo [*] Start Updating data.csv
+        echo -e "[*] Adding current data & time : \n\t$(date)"
+        echo -e "[*] Adding inputed temperature : \n\t${{ github.event.inputs.temp }}"
+        echo $(date +%d/%m/%y,%H:%M,${{ github.event.inputs.temp }}) >> data.csv
+        echo -e "[+] Update complete\n"
+    
+    - name: Auto-commit
+      run: |
+        echo [*] Start auto-commit
+        git config user.name "lostsh-autocommit"
+        git config user.email "0pdlna3@gmail.com"
+        git add .
+        git commit -m "Auto commiting data update"
+        git push
+        echo [+] Auto-commit complete
+
+# Command to run this task :
+#
+# curl -X POST \
+# -H "Accept: application/vnd.github.v3+json" \
+# -H "Authorization: token [personalToken]" \
+# https://api.github.com/repos/lostsh/node-time/actions/workflows/manual.yml/dispatches \
+# -d '{"ref":"master", "inputs":{"temp":"17.5"}}'
+#
