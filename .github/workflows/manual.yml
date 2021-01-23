@@ -11,8 +11,12 @@ on:
 
 jobs:
   write-data:
+    
     runs-on: ubuntu-latest
+    
     steps:
+    - uses: actions/checkout@v2 #for the auto-commit task
+    
     - name: Display inputed temperature
       run: echo "Temperature = ${{ github.event.inputs.temp }}"
     
