@@ -1,4 +1,1 @@
 **/secret.h
-
-nodemcu/
-!nodemcu/*.ino
