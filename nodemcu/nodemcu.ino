@@ -1,7 +1,23 @@
 #include <ESP8266WiFi.h>
 #include <WiFiClientSecure.h>
+#include "DHT.h" // DHT Sensor Library: https://github.com/adafruit/DHT-sensor-library Adafruit Unified Sensor Lib: https://github.com/adafruit/Adafruit_Sensor
 #include "secret.h"
 
+/* DHT Params */
+#define DHTPIN D4
+DHT dht(DHTPIN, DHT11);
+/*
+ * Note :
+ * This program runs on an ESP2268, so :
+ * Wiring is :
+ * DHT11 GND  -> ESP GND Pin
+ * DHT11 DATA -> ESP D4  Pin
+ * DHT11 VCC  -> ESP 3V3 Pin
+ */
+
+
+
+/* Wifi Params */
 const char* ssid = STASSID;
 const char* password = STAPSK;
 
@@ -26,11 +42,14 @@ void setup() {
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
+
+  dht.begin();
 }
 
 void loop() {
   //postRequest(12.5);
   delay(60000);
+  getTemp();
 }
 
 void postRequest(float temp) {
@@ -77,4 +96,31 @@ void postRequest(float temp) {
   Serial.println(line);
   Serial.println("==========");
   Serial.println("[*] End POST Request");
+}
+
+int getTemp(){
+  // Reading temperature or humidity takes about 250 milliseconds!
+  float h = dht.readHumidity();
+  // Read temperature as Celsius (the default)
+  float t = dht.readTemperature();
+
+  // Check if any reads failed and exit early (to try again).
+  if (isnan(h) || isnan(t)) {
+    Serial.println(F("Failed to read from DHT sensor!"));
+    return -1;
+  }
+  
+  // Compute heat index in Celsius (isFahreheit = false)
+  float hic = dht.computeHeatIndex(t, h, false);
+
+  Serial.print(F("Humidity: "));
+  Serial.print(h);
+  Serial.print(F("%  Temperature: "));
+  Serial.print(t);
+  Serial.print(F("°C "));
+  Serial.print(F(" Heat index: "));
+  Serial.print(hic);
+  Serial.println(F("°C "));
+
+  return t;
 }
