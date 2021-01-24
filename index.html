@@ -5,15 +5,29 @@
     <title>N-iot</title>
     <link rel="stylesheet" href="assets/css/index.css" />
     <script src="assets/js/graph.js"></script>
+    <script src="assets/js/tab.js"></script>
 </head>
 <body>
     <h1>Temperature :</h1>
-    
-    <div id="graphContainer">
-        <div id="graph"></div>
+
+    <div class="main">
+        <div id="graphContainer">
+            <div id="graph"></div>
+        </div>
+        
+        <div id="tableNavContainer">
+            <div id="tableContainer"></div>
+            <div id="navContainer">
+                <!--
+                <a onclick="refresh()" href="#page="><=</a>
+                <a onclick="refresh()" href="#page=">=></a>
+                -->
+            </div>
+        </div>
     </div>
 
     <!-- Call graph main generator func -->
     <script>main("data.csv");</script>
+    <script>table("data.csv");</script>
 </body>
 </html>
