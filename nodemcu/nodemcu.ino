@@ -26,55 +26,55 @@ void setup() {
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
+}
 
-  // Use WiFiClientSecure class to create TLS connection
+void loop() {
+  //postRequest(12.5);
+  delay(60000);
+}
+
+void postRequest(float temp) {
+  Serial.println("[*] Start POST Request");
+  
   WiFiClientSecure client;
-  Serial.print("connecting to ");
+  Serial.print("[*] connecting to ");
   Serial.println(host);
 
-  Serial.printf("Using fingerprint '%s'\n", fingerprint);
+  Serial.printf("[=] Using fingerprint '%s'\n", fingerprint);
   client.setFingerprint(fingerprint);
 
   if (!client.connect(host, httpsPort)) {
-    Serial.println("connection failed");
+    Serial.println("[-] connection failed");
     return;
   }
 
   String url = "/repos/lostsh/node-time/actions/workflows/manual.yml/dispatches";
-  Serial.print("requesting URL: ");
+  Serial.print("[*] requesting URL: ");
   Serial.println(url);
 
-  String dataPost = "{\"ref\":\"master\", \"inputs\":{\"temp\":\"22.5\"}}";
+  String dataPost = "{\"ref\":\"master\", \"inputs\":{\"temp\":\"" + String(temp) + "\"}}";
 
   client.print(String("POST ") + url + " HTTP/1.1\r\n" +
                "Host: " + host + "\r\n" +
                "User-Agent: Node-timeBYlostsh\r\n" +
                "Authorization: token " + TOKEN + "\r\n" +
-               "Content-Length: "+ dataPost.length() + "\r\n" +
-               "Content-Type: application/x-www-form-urlencoded\r\n"+
-               "\r\n" + 
+               "Content-Length: " + dataPost.length() + "\r\n" +
+               "Content-Type: application/x-www-form-urlencoded\r\n" +
+               "\r\n" +
                dataPost + "\r\n");
-
-  Serial.println("request sent");
+               
+  Serial.println("[+] request sent");
   while (client.connected()) {
     String line = client.readStringUntil('\n');
     if (line == "\r") {
-      Serial.println("headers received");
+      Serial.println("[+] headers received");
       break;
     }
   }
   String line = client.readStringUntil('\n');
-  if (line.startsWith("{\"state\":\"success\"")) {
-    Serial.println("esp8266/Arduino CI successfull!");
-  } else {
-    Serial.println("esp8266/Arduino CI has failed");
-  }
-  Serial.println("reply was:");
+  Serial.println("[=] reply was:");
   Serial.println("==========");
   Serial.println(line);
   Serial.println("==========");
-  Serial.println("closing connection");
-}
-
-void loop() {
+  Serial.println("[*] End POST Request");
 }
