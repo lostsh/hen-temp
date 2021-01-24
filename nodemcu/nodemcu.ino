@@ -47,9 +47,9 @@ void setup() {
 }
 
 void loop() {
-  //postRequest(12.5);
   delay(60000);
-  getTemp();
+  float temperature = getTemp();
+  postRequest(temperature);
 }
 
 void postRequest(float temp) {
@@ -98,7 +98,7 @@ void postRequest(float temp) {
   Serial.println("[*] End POST Request");
 }
 
-int getTemp(){
+float getTemp(){
   // Reading temperature or humidity takes about 250 milliseconds!
   float h = dht.readHumidity();
   // Read temperature as Celsius (the default)
