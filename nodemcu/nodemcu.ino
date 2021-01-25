@@ -47,7 +47,7 @@ void setup() {
 }
 
 void loop() {
-  delay(60000);
+  delay(3600000);
   float temperature = 0.0;
   float humidity = 0.0;
   getTemp(&temperature, &humidity);
