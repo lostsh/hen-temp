@@ -48,11 +48,13 @@ void setup() {
 
 void loop() {
   delay(60000);
-  float temperature = getTemp();
-  postRequest(temperature);
+  float temperature = 0.0;
+  float humidity = 0.0;
+  getTemp(&temperature, &humidity);
+  postRequest(temperature, humidity);
 }
 
-void postRequest(float temp) {
+void postRequest(float temp, float humid) {
   Serial.println("[*] Start POST Request");
   
   WiFiClientSecure client;
@@ -71,7 +73,7 @@ void postRequest(float temp) {
   Serial.print("[*] requesting URL: ");
   Serial.println(url);
 
-  String dataPost = "{\"ref\":\"master\", \"inputs\":{\"temp\":\"" + String(temp) + "\"}}";
+  String dataPost = "{\"ref\":\"master\", \"inputs\":{\"temp\":\"" + String(temp) + "\",\"humidity\":\""+ String(humid) +"\"}}";
 
   client.print(String("POST ") + url + " HTTP/1.1\r\n" +
                "Host: " + host + "\r\n" +
@@ -98,7 +100,7 @@ void postRequest(float temp) {
   Serial.println("[*] End POST Request");
 }
 
-float getTemp(){
+void getTemp(float *temp, float *humidity){
   // Reading temperature or humidity takes about 250 milliseconds!
   float h = dht.readHumidity();
   // Read temperature as Celsius (the default)
@@ -107,7 +109,9 @@ float getTemp(){
   // Check if any reads failed and exit early (to try again).
   if (isnan(h) || isnan(t)) {
     Serial.println(F("Failed to read from DHT sensor!"));
-    return -1;
+    *temp = -1;
+    *humidity = -1;
+    return;
   }
   
   // Compute heat index in Celsius (isFahreheit = false)
@@ -122,5 +126,6 @@ float getTemp(){
   Serial.print(hic);
   Serial.println(F("°C "));
 
-  return t;
+  *temp = t;
+  *humidity = h;
 }
