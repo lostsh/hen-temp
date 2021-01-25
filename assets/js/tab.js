@@ -14,8 +14,12 @@ function table(filePath){
         dataToDisplay.push(allDatas[i]);
     }
 
-    drawTable(dataToDisplay);
-    drawNavArrows(0, allDatas.length/10);
+    if(urlGetPage().page == 0){
+        drawTable(dataToDisplay, "Last values");
+    }else{
+        drawTable(dataToDisplay);
+    }
+    drawNavArrows(0, Math.ceil(allDatas.length/10));
 }
 
 /**
@@ -39,9 +43,8 @@ function urlGetPage(){
     return params;
 }
 
-function drawTable(data){
+function drawTable(data, title=""){
     var table = document.createElement("table");
-    table.border = "1";
 
     data.forEach(line => {
         var row = document.createElement("tr");
@@ -55,33 +58,44 @@ function drawTable(data){
 
     const parent = document.querySelector('#tableContainer');
     parent.appendChild(table);
+    
+    var titleTag = document.createElement("h3");
+    titleTag.textContent = title;
+    titleTag.style.textAlign = "center";
+    if(title!="")parent.appendChild(titleTag);
 }
 
 function drawNavArrows(min, max){
     var left = document.createElement("a");
     left.href = "#page="+(urlGetPage().page-1);
     left.textContent  = "<=";
-    left.onclick = refresh;
+    left.addEventListener('click', function(){
+        window.location.assign(location.origin+"#page="+(urlGetPage().page-1));
+        window.location.reload(true);
+    });
     var right = document.createElement("a");
     right.href = "#page="+(urlGetPage().page+1);
     right.textContent  = "=>";
-    right.onclick = refresh;
+    right.addEventListener('click', function(){
+        window.location.assign(location.origin+"#page="+(urlGetPage().page+1));
+        window.location.reload(true);
+    });
+
+    var info = document.createElement("span");
+    info.textContent = (urlGetPage().page)+"/"+max;
 
     const parent = document.querySelector('#navContainer');
     if(urlGetPage().page-1 >= min) parent.appendChild(left);
+    parent.appendChild(info);
     if(urlGetPage().page+1 <= max) parent.appendChild(right);
 }
 
-// DO NOT WORK YETTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-function refresh(){// DO NOT WORK YETTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-    // DO NOT WORK YETTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+function refresh(url=""){
     console.clear();
-    //window.location.href = window.location.href;
-    //window.location.assign(window.location.href);
-    //location.href = window.location.href;
-    //window.location.reload(true);
+    if(url=="") url = location.origin;
+    window.location.assign(url);
+    window.location.reload(true);
 }
-// DO NOT WORK YETTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 
 /**
  * Read file return content
@@ -108,8 +122,8 @@ function parse(rowData){
     var data = [];
     rowData.split('\n').forEach(line=>{
         line = line.split(',');
-        if(line.length >= 2 && !isNaN(parseInt(line[2]))){
-            data.push([line[0], line[1], parseInt(line[2])]);
+        if(line.length >= 2 && !isNaN(parseFloat(line[2]))){
+            data.push([line[0], line[1], parseFloat(line[2])]);
         }
     });
     return data;
