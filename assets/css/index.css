@@ -78,7 +78,8 @@ h1{
     width: 100%;
 }
 #minmaxContainer table,
-#minmaxContainer table tr td{
+#minmaxContainer table tr td,
+#minmaxContainer table th{
     border: 1px solid black;
 }
 

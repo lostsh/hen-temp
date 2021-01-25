@@ -122,8 +122,8 @@ function parse(rowData){
     var data = [];
     rowData.split('\n').forEach(line=>{
         line = line.split(',');
-        if(line.length >= 2 && !isNaN(parseFloat(line[2]))){
-            data.push([line[0], line[1], parseFloat(line[2])]);
+        if(line.length >= 4 && !isNaN(parseFloat(line[2])) && !isNaN(parseFloat(line[3]))){
+            data.push([line[0], line[1], parseFloat(line[2]), parseFloat(line[3])]);
         }
     });
     return data;
