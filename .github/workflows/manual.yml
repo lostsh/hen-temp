@@ -8,6 +8,10 @@ on:
         description: 'Input Temperature value'
         default: '0'
         required: true
+      humidity:
+        description: 'Input Humidity value'
+        default: '0'
+        required: true
 
 jobs:
   write-data:
@@ -17,15 +21,16 @@ jobs:
     steps:
     - uses: actions/checkout@v2 #for the auto-commit task
     
-    - name: Display inputed temperature
-      run: echo "Temperature = ${{ github.event.inputs.temp }}"
+    - name: Display data Temperature => [${{ github.event.inputs.temp }}] Humidity => [${{ github.event.inputs.humidity }}]
+      run: echo -e "Temperature = ${{ github.event.inputs.temp }}\nHumidity = ${{ github.event.inputs.humidity }}"
     
     - name: Update data.csv 
       run: |
         echo [*] Start Updating data.csv
         echo -e "[*] Adding current data & time : \n\t$(date)"
         echo -e "[*] Adding inputed temperature : \n\t${{ github.event.inputs.temp }}"
-        echo $(date +%d/%m/%y,%H:%M,${{ github.event.inputs.temp }}) >> data.csv
+        echo -e "[*] Adding inputed humidity : \n\t${{ github.event.inputs.humidity }}"
+        echo $(date +%d/%m/%y,%H:%M,${{ github.event.inputs.temp }},${{ github.event.inputs.humidity }}) >> data.csv
         echo -e "[+] Update complete\n"
     
     - name: Auto-commit
@@ -44,5 +49,5 @@ jobs:
 # -H "Accept: application/vnd.github.v3+json" \
 # -H "Authorization: token [personalToken]" \
 # https://api.github.com/repos/lostsh/node-time/actions/workflows/manual.yml/dispatches \
-# -d '{"ref":"master", "inputs":{"temp":"17.5"}}'
+# -d '{"ref":"master", "inputs":{"temp":"17.5", "humidity":"89"}}'
 #
