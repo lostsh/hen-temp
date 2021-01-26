@@ -63,18 +63,15 @@ https://api.github.com/repos/lostsh/node-time/actions/workflows/manual.yml/dispa
 ```
 
 ### Pour envoyer une requette
-Pour envoyer une requette a la github Action qui se trouve chez github api, on peut utiliser le programme `main.c` qui se trouve dans le dossier `sendRequest`. Le fichier qui est signore `secret.h` contiend une seule ligne a savoir :
+Pour envoyer une requette a la github Action qui se trouve chez github api, le programme embarqué nécécite un fichier `secret.h` placé dans le même dossier que `nodemcu.ino` contenant, le *token* ainsi que les informations relatives au wifi.
+
+Contenu du fichier :
 
 ```c
-#define TOKEN 40XXXXXXXXXX1c20dfbaaaXXXXXXXXXXhdd7XXXX
-```
+#define TOKEN "40XXXXXXXXXX1c20dfbaaaXXXXXXXXXXhdd7XXXX"
 
-Pour le compiler : 
-```bash
-gcc main.c -o request
-```
-Pour envoyer une requette : 
-```bash
-# 22.5 is the temperature to send
-./request 22.5
+#ifndef STASSID
+#define STASSID "[nom de votre wifi]"
+#define STAPSK  "[mot de passe de votre wifi]"
+#endif
 ```
